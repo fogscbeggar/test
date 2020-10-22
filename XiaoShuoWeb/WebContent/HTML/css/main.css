@@ -1,0 +1,23 @@
+*{ margin: 0; padding: 0; list-style: none;}
+a{ text-decoration: none; color: rgb(72,143,206);}
+body{ background: rgb(242,242,242); color: #444;}
+
+.container{ font-size: 12px;}
+.container .left{ width: 1070px; overflow: hidden;}
+.container .left dl{ width: 326px; float: left; padding: 12px 10px 12px 10px; background: white; margin: 10px 10px 0 0;}
+.container .left dl dt{ width:160px ;}
+.container .left dl dt img{ width: 100px; height: 140px; border: #ccc 3px solid;}
+.container .left dl dd{ width: 210px; float: right; line-height: 18px;}
+.container .left dl dd span:nth-last-child(1){ color:#999; text-indent: 24px; display: block;}
+.container .left dl dd .info:after{ content: "...";}
+
+.items{ font-size: 12px;}
+.items .left{ overflow: hidden;}
+.items .left dl{ width: 241px; padding: 8px; background: white; margin: 10px 10px 0 0; float: left;}
+.items .left dl dt{ padding-bottom: 14px; border-bottom: #ccc 1px solid; font-weight: bold; font-size: 14px; color: rgb(85,85,85);}
+.items .left dl dt span{  border-left: rgb(16,125,207) 3px solid; padding-left: 8px;}
+.items .left dl dd{line-height: 28px; }
+.items .left dl dd ul li{ color: rgb(178,178,178);}
+.items .left dl dd ul li:nth-child(1){ color: #444; padding-top: 10px; line-height: 22px;}
+.items .left dl dd ul li:nth-child(1) img{ width: 48px; height: 65px; border: #ccc 3px solid;}
+.items .left dl dd ul li:nth-child(1) .info{ width: 180px; float: right;}

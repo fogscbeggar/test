@@ -1,0 +1,78 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/common.css" />
+		<style>
+			.panel{ margin-top: 10px; overflow: hidden;}
+			.panel .left{ width: 620px; padding: 10px 10px 10px 120px; background: white; float: left;}
+			.panel .left .tit{ line-height: 32px; font-size: 16px; font-weight: bold;}
+			.panel .left form input{ width: 290px; margin:10px 0 10px 20px; background: lightyellow; padding: 0 5px; border: #ccc 1px solid; line-height: 32px;}
+			.panel .left form img{margin: 10px 304px 0 0; float: right;}
+			.panel .left form #vcode{ width: 120px; background: #eee;}
+			.panel .left form #btn{ width: 100px; height: 30px; background: white; border: #ccc 1px solid; margin-left: 62px; cursor: pointer;}
+			.panel .left form #btn:hover{ background: #eee;}
+			.panel .right{ width: 250px; margin-left: 20px; float: left; line-height: 24px; color: #666 ;}
+			.panel .right dt{ padding:5px 0 10px 0; border-bottom: #ccc 1px dashed;}
+			.panel .right dd{ padding: 10px 0;}
+		</style>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				if($.cookie("username")!="undefied")$("input[name=username]").val($.cookie("username"))
+				$("#btn").click(function(){
+					var data=$("form").serializeArray();
+					$.post("user/login.do",data,function(d){
+						if(d=="true"){
+							alert("登录成功！");
+							location.href="index.html";
+						}else{
+							alert("登录失败！");
+						}
+					});
+					return false;
+				})
+			})
+		</script>
+		<script>
+		$(function(){
+			$("#head").load("head.html");
+		})
+		</script>
+	</head>
+
+	<body>
+		<div id="head"></div>
+		
+		<div class="panel">
+			<div class="left">
+				<div class="tit">» 登陆验证</div>
+				<form action="" method="post">
+					<label>账&emsp;号</label><input type="text" name="username" /><br>
+					<label>密&emsp;码</label><input type="text" name="userpwd" /><br>
+					<label>验证码</label><input type="text" id="vcode" name="vcode" /><img src="yzm" height="32" onclick="this.src='yzm?'+Math.random()"><br>
+					<input type="checkbox" name="jzpwd" value="1" style="width:20px;">记住用户名<br>
+					<input type="submit" id="btn" value="登录">
+				</form>
+			</div>
+			<dl class="right">
+				<dt><a href="reg.html">我没有账户！ 立即注册 »</a> </dt>
+				<dd>注册用户您可以...<br>
+					阅读 最新最热门的网络小说<br>
+					下载 众多格式的优质电子书<br>
+					分享 您喜爱的作品<br>
+					享受 个人书屋、藏书架等人性化服务<br>
+					参与 原创社区活动</dd>
+
+
+			</dl>
+		</div>
+		
+		<div class="copyright">
+			请支持作者的书友购买正版光盘或者正版书籍，其版权归相关影音公司或原作者所有。<br> Copyright © 2020 全本小说网 All Rights Reserved.
+		</div>
+	</body>
+
+</html>

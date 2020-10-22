@@ -1,0 +1,39 @@
+<script src="js/jquery-1.11.1.min.js"></script>
+<script>
+$(function(){
+	$.post("user/isLogin.do",function(d){
+		if(d.stat){
+			var login="<font color=\"red\">"+d.username+"</font>&emsp;<a href=\"user/out.do\">退出</a>"
+		}else{
+			var login="<a href=\"login.html\">登录</a> | <a href=\"reg.html\">免费注册</a> | ";
+			
+		}
+		$(".login").prepend($(login));
+	},"json")
+})
+</script>
+
+<div class="top_bg">
+			<div class="top panel">
+				<div class="login">
+					
+					<a href="#">成为作家</a>
+				</div>
+				<span>欢迎来到“阿狸小说网”</span>
+			</div>
+		</div>
+		<div class="nav_bg">
+			<div class="nav panel">
+				<img src="img/Novellogo.png" align="left">
+				<a href="index.html">首页</a>
+				<a href="list.html">玄幻魔法</a>
+				<a href="list.html">仙侠修真</a>
+				<a href="list.html">都市言情</a>
+				<a href="list.html">历史军事</a>
+				<a href="list.html">网游竞技</a>
+				<a href="list.html">科幻灵异</a>
+				<a href="list.html">恐怖惊悚</a>
+				<a href="list.html">其它类型</a>
+				<a href="list.html">热门小说</a>
+			</div>
+		</div>

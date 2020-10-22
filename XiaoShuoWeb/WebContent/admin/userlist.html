@@ -1,0 +1,129 @@
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>网站信息</title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<script src="js/function.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//初始数据
+		getTableData("",1);
+		
+		function getTableData(kw,p){
+			//清除除了第一行之外所有行，gt(0)表示索引大于0的所有元素
+			$("table tr:gt(0)").remove();
+			//加载表格
+			$.get("../user/allUser.do",{"kw":kw,"p":p},function(data){
+				var str="";
+				var d=data.rows;
+				$.each(d,function(i){
+					str+="<tr>";
+					str+="<td>"+d[i]["id"]+"</td>";
+					str+="<td>"+d[i]["username"]+"</td>";
+					str+="<td>"+(d[i]["realname"]==null?"":d[i]["realname"])+"</td>";
+					str+="<td>"+(d[i]["sex"]==1?"男":"女")+"</td>";
+					str+="<td>"+d[i]["email"]+"</td>";
+					str+="<td>"+(d[i]["status"]==0?"<font color=\"red\">未激活</font>":"<font color=\"green\">已激活</font>")+"</td>";
+					str+="<td>"+formatDate(d[i]["create_time"])+"</td>";
+					str+="<td>";
+					str+="<div class=\"button-group\">"
+					str+="<a type=\"button\" class=\"button border-main\" href=\"javascript:void(0)\" onclick=\"edit("+d[i]["id"]+")\"><span class=\"icon-edit\"></span>修改</a>";
+					str+="<a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"return del(this,"+d[i]["id"]+")\">";
+					str+="<span class=\"icon-trash-o\"></span> 删除</a></div></td></tr>";
+				})
+
+				$("table tr").eq(0).after($(str));
+				
+				var pages="<tr>";
+				pages+="<td colspan=\"8\"><div class=\"pagelist\">";
+				pages+="<a href=\"javascript:void(0);\" p=\""+data.first+"\">首页</a>";
+				pages+="<a href=\"javascript:void(0);\" p=\""+data.prePage+"\">上一页</a>";
+				for(i=data.startPage;i<=data.endPage;i++){
+					if(data.curPage==i){
+						pages+="<span class=\"current\" p=\""+i+"\">"+i+"</span>";
+						continue;
+					}
+					pages+="<a href=\"javascript:void(0);\" p=\""+i+"\">"+i+"</a>";
+				}
+				pages+="<a href=\"javascript:void(0);\" p=\""+data.nextPage+"\">下一页</a>";
+				pages+="<a href=\"javascript:void(0);\" p=\""+data.last+"\">末页</a>";
+				pages+="</div></td>";
+				pages+="</tr>";
+				$("table tbody").append(pages);
+			},"json");
+		}
+		
+		
+		//搜索
+		$(".searchForm a").click(function(){
+			var p=$(".pagelist span").html();
+			getTableData($("input[name=kw]").val(),p);
+			return false;
+		})
+		
+		//页码事件
+		$(document).on("click",".pagelist a",function(event){
+			var p=$(this).attr("p");
+			getTableData($("input[name=kw]").val(),p);
+			return false;
+		})
+	})
+</script>
+</head>
+<body>
+	<div class="panel admin-panel">
+		<div class="panel-head">
+			<strong class="icon-reorder"> 用户列表</strong>
+		</div>
+		<div class="padding border-bottom">
+			<form action="" method="get" class="searchForm" style="width: 400px; float: right">
+				<li>
+					<input type="text" placeholder="请输入搜索关键字" name="kw" class="input" style="width: 250px; line-height: 17px; display: inline-block" />
+					<a href="javascript:void(0)" class="button border-main icon-search"> 搜索</a>
+				</li>
+			</form>
+			<a class="button border-yellow" href=""><span class="icon-plus-square-o"></span> 添加用户</a>
+			<a href="userlist.html" class="button border-main icon-refresh"> 全部显示</a>
+
+		</div>
+		<table class="table table-hover text-center">
+			<tr>
+				<th width="5%">ID</th>
+				<th>用户名</th>
+				<th>真实姓名</th>
+				<th>性别</th>
+				<th>邮箱</th>
+				<th>激活状态</th>
+				<th>注册时间</th>
+				<th width="250">操作</th>
+			</tr>
+		</table>
+	</div>
+	<script>
+		function del(obj,id) {
+			if (confirm("您确定要删除吗?")) {
+				$.get("../user/delUser.do",{"id":id},function(d){
+					if(d){
+						$(obj).parent().parent().parent().remove();
+						alert("删除成功！");
+					}else{
+						alert("删除失败！");
+					}
+				})
+			}
+		}
+		
+		function edit(id){
+			location.href="useredit.html?"+id;
+		}
+	</script>
+
+</body>
+</html>
